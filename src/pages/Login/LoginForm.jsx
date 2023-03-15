@@ -1,8 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Box, Typography } from '@mui/material';
 import { loginFormSchema } from './schemas/login-form-schema';
 import { CustomInput, CustomButton } from '../../components';
+import DisplayFormValues from './components/DisplayFormValues';
 
 export default function LoginForm() {
   const {
@@ -35,14 +35,11 @@ export default function LoginForm() {
         </form>
       </FormProvider>
 
-      <Box color='grey.600' mt='10px'>
-        {isDirty && !isValid && (
-          <>
-            <Typography> Username: {usernameWatch}</Typography>
-            <Typography> Password: {passwordWatch}</Typography>
-          </>
-        )}
-      </Box>
+      <DisplayFormValues
+        isDirty={isDirty}
+        isValid={isValid}
+        values={{ usernameWatch, passwordWatch }}
+      />
     </>
   );
 }
