@@ -1,7 +1,8 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { loginFormSchema } from './schemas/login-form-schema';
 import { Box, Typography } from '@mui/material';
+import { loginFormSchema } from './schemas/login-form-schema';
+import { CustomInput } from '../../components/CustomInput';
 
 export default function LoginForm() {
   const {
@@ -26,9 +27,9 @@ export default function LoginForm() {
 
       <FormProvider {...{ register, errors }}>
         <form onSubmit={handleSubmit()}>
-          <input type='text' name='' id='' />
-          <input type='text' name='' id='' />
-          <button></button>
+          <CustomInput name='username' label='Username' required={true} />
+          <CustomInput name='password' label='Contraseña' required={true} />
+          <button>Login</button>
         </form>
       </FormProvider>
 
