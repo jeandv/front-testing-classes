@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { loginFormSchema } from './schemas/login-form-schema';
 
 export default function LoginForm() {
   useForm({
     defaultValues: { username: '', password: '' },
     mode: 'onChange',
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginFormSchema),
   });
 
   return (
