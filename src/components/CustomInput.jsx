@@ -8,7 +8,7 @@ const formValidationShowError = (errors, errorKey) =>
     ''
   );
 
-export const Input = ({
+export const CustomInput = ({
   name = '',
   label = '',
   type = 'text',
