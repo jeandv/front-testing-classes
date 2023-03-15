@@ -15,11 +15,18 @@ export default function LoginForm() {
     resolver: yupResolver(loginFormSchema),
   });
 
+  const usernameWatch = watch('username');
+  const passwordWatch = watch('password');
+
   return (
-    <form onSubmit={handleSubmit()}>
-      <input type='text' name='' id='' />
-      <input type='text' name='' id='' />
-      <button></button>
-    </form>
+    <>
+      {usernameWatch}
+      {passwordWatch}
+      <form onSubmit={handleSubmit()}>
+        <input type='text' name='' id='' />
+        <input type='text' name='' id='' />
+        <button></button>
+      </form>
+    </>
   );
 }
