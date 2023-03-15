@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginFormSchema } from './schemas/login-form-schema';
+import { Box, Typography } from '@mui/material';
 
 export default function LoginForm() {
   const {
@@ -22,11 +23,21 @@ export default function LoginForm() {
     <>
       {usernameWatch}
       {passwordWatch}
+
       <form onSubmit={handleSubmit()}>
         <input type='text' name='' id='' />
         <input type='text' name='' id='' />
         <button></button>
       </form>
+
+      <Box color='grey.600' mt='10px'>
+        {isDirty && !isValid && (
+          <>
+            <Typography> Username: {usernameWatch}</Typography>
+            <Typography> Password: {passwordWatch}</Typography>
+          </>
+        )}
+      </Box>
     </>
   );
 }
