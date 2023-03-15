@@ -3,6 +3,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { loginFormSchema } from './schemas/login-form-schema';
 import { CustomInput, CustomButton } from '../../components';
 import DisplayFormValues from './components/DisplayFormValues';
+import { callEndpoint } from './services/call-endpoint';
 
 export default function LoginForm() {
   const {
@@ -20,13 +21,18 @@ export default function LoginForm() {
   const usernameWatch = watch('username');
   const passwordWatch = watch('password');
 
+  const onSubmit = async (data) => {
+    const result = await callEndpoint(data);
+
+    console.log(result);
+
+    reset();
+  };
+
   return (
     <>
-      {usernameWatch}
-      {passwordWatch}
-
       <FormProvider {...{ register, errors }}>
-        <form onSubmit={handleSubmit()}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <CustomInput name='username' label='Username' required={true} />
           <CustomInput name='password' label='Contraseña' required={true} />
           <CustomButton isDirty={isDirty} isValid={isValid}>
