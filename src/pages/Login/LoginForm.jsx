@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginFormSchema } from './schemas/login-form-schema';
 import { Box, Typography } from '@mui/material';
@@ -24,11 +24,13 @@ export default function LoginForm() {
       {usernameWatch}
       {passwordWatch}
 
-      <form onSubmit={handleSubmit()}>
-        <input type='text' name='' id='' />
-        <input type='text' name='' id='' />
-        <button></button>
-      </form>
+      <FormProvider {...{ register, errors }}>
+        <form onSubmit={handleSubmit()}>
+          <input type='text' name='' id='' />
+          <input type='text' name='' id='' />
+          <button></button>
+        </form>
+      </FormProvider>
 
       <Box color='grey.600' mt='10px'>
         {isDirty && !isValid && (
