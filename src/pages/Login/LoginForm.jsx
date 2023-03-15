@@ -2,7 +2,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Typography } from '@mui/material';
 import { loginFormSchema } from './schemas/login-form-schema';
-import { CustomInput } from '../../components/CustomInput';
+import { CustomInput, CustomButton } from '../../components';
 
 export default function LoginForm() {
   const {
@@ -29,7 +29,9 @@ export default function LoginForm() {
         <form onSubmit={handleSubmit()}>
           <CustomInput name='username' label='Username' required={true} />
           <CustomInput name='password' label='Contraseña' required={true} />
-          <button>Login</button>
+          <CustomButton isDirty={isDirty} isValid={isValid}>
+            Iniciar Sesión
+          </CustomButton>
         </form>
       </FormProvider>
 
