@@ -1,5 +1,4 @@
-import { Typography } from '@mui/material';
-import { useFormContext } from 'react-hook-form';
+import { TextField, Typography } from '@mui/material';
 
 const formValidationShowError = (errors, errorKey) =>
   errors[errorKey] ? (
@@ -8,28 +7,30 @@ const formValidationShowError = (errors, errorKey) =>
     ''
   );
 
-export const CustomInput = ({
+export function CustomInput({
+  register,
   name = '',
+  errors,
   label = '',
   type = 'text',
   disabled = false,
-  required = false,
-}) => {
-  const { register, errors } = useFormContext();
-
+  trigger,
+}) {
   return (
     <div>
       <TextField
-        required={required}
+        required
         disabled={disabled}
         type={type}
-        error={errors && !!errors(name)}
+        error={errors && !!errors[name]}
+        id={name}
         label={label}
         variant='outlined'
         {...register(name)}
+        {...(trigger ? { onChange: () => trigger && trigger() } : {})}
         fullWidth
       />
       {errors && formValidationShowError(errors, name)}
     </div>
   );
-};
+}

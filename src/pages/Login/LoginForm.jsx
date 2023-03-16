@@ -1,51 +1,66 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { Box, Typography } from '@mui/material';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginFormSchema } from './schemas/login-form-schema';
-import { CustomInput, CustomButton } from '../../components';
-import DisplayFormValues from './components/DisplayFormValues';
 import { callEndpoint } from './services/call-endpoint';
+import { CustomButton, PasswordInput, UsernameInput } from '../../components';
 
 export default function LoginForm() {
+  const [values, setValues] = useState({
+    username: '',
+    password: '',
+  });
+
   const {
     register, // registra los inputs con las propiedades del formulario
     handleSubmit, // hace el submit del form
-    watch, // si modificamos algun valor del form, ese valor se guardara y cada vez q se cambia se podrá usar
+    // watch, si modificamos algun valor del form, ese valor se guardara y cada vez q se cambia se podrá usar
     formState: { errors, isDirty, isValid }, // mostramos los errores, si es valido, etc
     reset, // hace reset al form
   } = useForm({
     defaultValues: { username: '', password: '' },
-    mode: 'onChange',
     resolver: yupResolver(loginFormSchema),
+    mode: 'all',
   });
 
-  const usernameWatch = watch('username');
-  const passwordWatch = watch('password');
-
   const onSubmit = async (data) => {
-    const result = await callEndpoint(data);
+    // const result = await callEndpoint(data);
 
-    console.log(result);
+    // console.log(result);
+
+    setValues({ ...data });
 
     reset();
   };
 
   return (
-    <>
-      <FormProvider {...{ register, errors }}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CustomInput name='username' label='Username' required={true} />
-          <CustomInput name='password' label='Contraseña' required={true} />
-          <CustomButton isDirty={isDirty} isValid={isValid}>
-            Iniciar Sesión
+    <Box
+      sx={{
+        bgcolor: 'grey.300',
+        borderRadius: '5px',
+        p: '50px',
+        width: '50%',
+      }}
+    >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <UsernameInput register={register} errors={errors} />
+          <PasswordInput register={register} errors={errors} />
+          <CustomButton type='submit' isDirty={isDirty} isValid={isValid}>
+            Login
           </CustomButton>
-        </form>
-      </FormProvider>
+        </Box>
+      </form>
 
-      <DisplayFormValues
-        isDirty={isDirty}
-        isValid={isValid}
-        values={{ usernameWatch, passwordWatch }}
-      />
-    </>
+      <Box color='grey.600' mt='10px'>
+        {values.username && values.password && (
+          <>
+            <Typography>Username: {values.username}</Typography>
+            <Typography>Password: {values.password}</Typography>
+          </>
+        )}
+      </Box>
+    </Box>
   );
 }
